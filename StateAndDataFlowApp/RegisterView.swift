@@ -10,6 +10,9 @@ import SwiftUI
 struct RegisterView: View {
     @EnvironmentObject var user: UserManager
     @AppStorage(DataManager.name) private var name = ""
+    var nameIsValid: Bool {
+        name.count >= 3
+    }
     
     var body: some View {
         HStack {
@@ -24,12 +27,12 @@ struct RegisterView: View {
                     .font(.title)
                     .foregroundColor(Color(#colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1))).shadow(color: Color(#colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)), radius: 2, x: 2, y: 2)
                 }
-//                .disabled(false)
-//                .opacity(1)
+                .disabled(!nameIsValid)
             }
             .padding(.leading, 40.0)
             Text("\(name.count)")
                 .padding(.trailing, 20.0)
+                .foregroundColor(nameIsValid ? .green : .red)
         }
     }
     
@@ -39,14 +42,6 @@ struct RegisterView: View {
             user.isRegister.toggle()
         }
     }
-    
-//    private func characterCheck() {
-//        if name.count >= 3{
-//            opacity = 1
-//        } else {
-//            return
-//        }
-//    }
 }
 
 struct RegisterView_Previews: PreviewProvider {
